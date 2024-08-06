@@ -1,44 +1,46 @@
-
+import { createReduser } from "../redux/utils";
+import { client } from '../API/tmdb';
 
 const initialState = {
-    top: [
-        {
-            id: 1,
-            title: "The Shawshank Redemption",
-            popularity: 9.2,
-            overview: "Two imprisoned men bond over",
-            year: 1994
-        },
-        {
-            id: 2,
-            title: "The Godfather",
-            popularity: 8.6,
-            overview: "Dreams of passion and bloody crime",
-            year: 1972
-        },
-        {
-            id: 3,
-            title: "The Godfather: Part II",
-            popularity: 7.4,
-            overview: "Comedy about the organized crime",
-            year: 1974
-        },
-        {
-            id: 4,
-            title: "The Dark Knight",
-            popularity: 5.5,
-            overview: "blockbuster movie",
-            year: 2008
-        },
-    ]
+    top: [],
+    loading: false
 };
-function moviesReducer(state = initialState, action) {
-    // switch (action.type) {
-    //     case "ADD_MOVIES":
-    //         return action.movies;
-    //     default:
-            return state;
-    
+
+ const moviesLoader = (movies) => ({
+    type: "movies/loader",
+    payload: movies
+})
+ const moviesLoading = () => ({
+    type: "movies/loading",
+})
+
+export function fetchMovies() {
+    return async (dispatch, getState) => {
+        dispatch(moviesLoading());
+      const config = await client.getConfigeration();
+      const imageUrl = config.images.base_url;
+      const response = await client.getNowPlaying();
+
+      response.results.forEach(movie => {
+        movie.backdrop_path = `${imageUrl}w500${movie.backdrop_path}`;
+      })
+      dispatch(moviesLoader(response.results));
+    }
 }
 
+const moviesReducer = createReduser(initialState, {
+    "movies/loader": (state, action) => {
+        return {
+            ...state,
+            top: action.payload,
+            loading: false
+        }
+    },
+    "movies/loading":(state, action) => {
+        return {
+            ...state,
+            loading: true
+        }
+    }
+})
 export default moviesReducer

@@ -1,14 +1,18 @@
-import { applyMiddleware, createStore } from "redux";
-import rootReducer from "../src/reducers/rootReducer"; 
-import { composeWithDevTools } from "@redux-devtools/extension";
-import { thunk } from "redux-thunk";
+import { configureStore } from "@reduxjs/toolkit";
+import { setupListeners } from "@reduxjs/toolkit/query";
+import { useDispatch, useSelector } from "react-redux";
+import { tmdbApi } from "./services/tmdb";
 
-function configureStore() {
-    const composedEnhancer = composeWithDevTools(applyMiddleware(thunk))
-    const store = createStore(rootReducer, composedEnhancer);
-    return store;
-}
+const store = configureStore({
+    reducer: {
+        [tmdbApi.reducerPath]: tmdbApi.reducer,
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(tmdbApi.middleware),
+});
 
-const store = configureStore();
+setupListeners(store.dispatch);
+export const useAppDispetch = useDispatch
+
+export const useAppSelector = useSelector
 
 export default store;

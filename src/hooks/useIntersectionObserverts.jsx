@@ -1,31 +1,21 @@
-import { useEffect, useState, useRef, MutableRefObject } from "react"
-
+import { useEffect, useState, useRef } from "react"
 
 export function useIntersectionObserver(options = {}) {
-    const { threshold = 1.0, root = null, rootMargin = "0px" } = options;
-    const targetRef = useRef(null)
+  const { threshold = 1.0, root = null, rootMargin = "0px", onIntersect } = options;
+  const targetRef = useRef(null)
+  const [entry, setEntry] = useState()
 
-    const [entry, setEntry] = useState()
-
-    function callbackFn(entries=IntersectionObserverEntry) {
+  useEffect(() => {
+    const currentRef = targetRef.current;
+    const observer = new IntersectionObserver(
+      (entries = IntersectionObserverEntry) => {
         const [entry] = entries;
+        if (entry.isIntersecting) { onIntersect?.(); }
         setEntry(entry);
-    }
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(callbackFn, { threshold, root, rootMargin});
-        const currentRef = targetRef.current;
-    
-        if (currentRef) {
-          observer.observe(currentRef);
-        }
-    
-        return function () {
-          if (currentRef) {
-            observer.disconnect();
-          }
-        };
-      }, [root, rootMargin, threshold]);
-    
-      return [targetRef, entry];
+      }, { threshold, root, rootMargin });
+    if (currentRef) {observer.observe(currentRef);}
+    return function () {
+      if (currentRef) {observer.disconnect();}};
+    }, [onIntersect, root, rootMargin, threshold]);
+  return [targetRef, entry];
 }

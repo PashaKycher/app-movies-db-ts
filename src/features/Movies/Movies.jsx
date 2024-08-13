@@ -1,63 +1,59 @@
-import React, { useContext, useEffect, useState,useCallback } from 'react'
-import { fetchNextPage, resetMovies } from '../../reducers/moviesReducer';
-import { useAppDispetch, useAppSelector } from '../../hooks';
+import React, { useContext, useState, useCallback } from 'react'
 import { Container, Grid, LinearProgress, Typography } from '@mui/material';
 import { AuthContext, anonymousUser } from '../../AuthContext';
 import { useIntersectionObserver } from '../../hooks/useIntersectionObserverts';
 import MoviesCart from './MoviesCart';
 import MoviesFilter from './MoviesFilter';
+import { useGetMoviesQuery, useGetConfigurationQuery } from '../../services/tmdb';
 
+const initialQuery = {
+  page: 1,
+  filters: {},
+};
 
 function Movies() {
-  const dispatch = useAppDispetch();
-  const movies = useAppSelector((state) => state.movies.top);
-  const loading = useAppSelector((state) => state.movies.loading);
-  const hasMorePages = useAppSelector((state) => state.movies.hasMorePages);
-  const [filters, setFilters] = useState();
-
+  const [query, setQuery] = useState(initialQuery);
+  const { data: configuration } = useGetConfigurationQuery();
+  const { data, isFetching } = useGetMoviesQuery(query);
+  const movies = data?.results;
+  const hasMorePages = data?.hasMorePages;
   const auth = useContext(AuthContext)
   const loggedIn = auth.user !== anonymousUser
-  const [targetRef, entry] = useIntersectionObserver()
-
-  useEffect(() => {
-    dispatch(resetMovies());
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (entry?.isIntersecting && hasMorePages) {
-      const moviesFilters = filters
-        ? {
-            keywords: filters.keywords.map((k) => k.id),
-            genres: filters.genres,
-          }
-        : undefined;
-
-      dispatch(fetchNextPage(moviesFilters));
-    }
-  }, [dispatch, entry?.isIntersecting, filters, hasMorePages]);
-
   const handleAddToFavorites = useCallback(
     (id) => alert(`Not implemented! Action: ${auth.user.name} is adding movie ${id} to favorites.`),
-    [auth.user.name] )
+    [auth.user.name])
+  const onIntersect = useCallback(() => {
+    if (hasMorePages) { setQuery((q) => ({ ...q, page: q.page + 1 })); }
+  }, [hasMorePages]);
+  const [targetRef] = useIntersectionObserver({ onIntersect })
 
+  function formatImageUrl(imagePath) {
+    return imagePath && configuration ? `${configuration.images.base_url}w500${imagePath}` : undefined;
+  }
   return (
     <Grid container spacing={2} sx={{ flexWrap: "nowrap" }}>
       <Grid item xs="auto">
         <MoviesFilter
           onApply={(filters) => {
-            dispatch(resetMovies());
-            setFilters(filters);
+            const moviesFilters = {
+              keywords: filters?.keywords.map((k) => k.id),
+              genres: filters?.genres,
+            };
+            setQuery({
+              page: 1,
+              filters: moviesFilters,
+            });
           }} />
       </Grid>
 
       <Grid item xs={12}>
         <Container sx={{ py: 8 }} maxWidth="lg">
-          {!loading && !movies.length && <Typography variant="h6">No movies were found that match your query.</Typography>}
+          {!isFetching && !movies?.length && <Typography variant="h6">No movies were found that match your query.</Typography>}
           <Grid container spacing={4}>
-            {movies.map(movie => (
+            {movies?.map(movie => (
               <Grid item key={movie.id} xs={12} sm={6} md={4}>
                 <MoviesCart
-                  image={movie.image}
+                  image={formatImageUrl(movie.backdrop_path)}
                   id={movie.id}
                   title={movie.title}
                   popularity={movie.popularity}
@@ -65,10 +61,10 @@ function Movies() {
                   year={movie.year}
                   enabled={loggedIn}
                   onAddToFavorite={handleAddToFavorites} />
-               </Grid>
-              ))}
+              </Grid>
+            ))}
           </Grid>
-          <div ref={targetRef}>{loading && <LinearProgress color='secondary' sx={{ mt: 15 }} />}</div>
+          <div ref={targetRef}>{isFetching && <LinearProgress color='secondary' sx={{ mt: 15 }} />}</div>
         </Container>
       </Grid >
     </Grid >

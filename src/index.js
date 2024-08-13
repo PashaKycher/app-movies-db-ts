@@ -19,7 +19,10 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (<Provider store={store}><App /></Provider>),
+    element: (
+    <Provider store={store}>
+      <App />
+    </Provider>),
     children: [
       {
         path: "/",

@@ -16,22 +16,22 @@ import Home from './features/Home/Home';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
   {
-    path: "https://PashaKychergithub.io/app-movies-db-ts/",
+    path: "/app-movies-db-ts/",
     element: (
     <Provider store={store}>
       <App />
     </Provider>),
     children: [
       {
-        path: "https://PashaKychergithub.io/app-movies-db-ts/",
+        path: "/app-movies-db-ts/",
         element: <Home />,
       },
       {
-        path: "https://PashaKychergithub.io/app-movies-db-ts/movies",
+        path: "/app-movies-db-ts/movies",
         element: <Movies />,
       },
       {
-        path: "https://PashaKychergithub.io/app-movies-db-ts/about",
+        path: "/app-movies-db-ts/about",
         element: <About />,
       },
     ]

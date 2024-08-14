@@ -2,7 +2,6 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
@@ -15,7 +14,6 @@ import store from './store';
 import Home from './features/Home/Home';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -37,9 +35,7 @@ const router = createBrowserRouter([
         element: <About />,
       },
     ]
-  },
-
-]);
+  },]);
 
 root.render(
   <React.StrictMode>

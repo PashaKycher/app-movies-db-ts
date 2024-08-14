@@ -1,8 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-
-
-
 export const tmdbApi = createApi({
   reducerPath: "tmdbApi",
   baseQuery: fetchBaseQuery({
@@ -21,11 +18,10 @@ export const tmdbApi = createApi({
         const params = new URLSearchParams({
           page: moviesQuery.page.toString(),
         });
-
+        
         if (moviesQuery.filters.keywords?.length) {
           params.append("with_keywords", moviesQuery.filters.keywords.join("|"));
         }
-
         if (moviesQuery.filters.genres?.length) {
           params.append("with_genres", moviesQuery.filters.genres.join(","));
         }

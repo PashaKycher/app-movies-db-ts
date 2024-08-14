@@ -6,12 +6,10 @@ import { anonymousUser } from '../../AuthContext';
 import {useContext} from 'react'
 
 export default function Home() {
-
     const auth = useContext(AuthContext)
     const loggedIn = auth.user !== anonymousUser
     const greeting = loggedIn   ? `Welcome! ${auth.user.name}, exlore movies today with us!`
                                 : 'Welcome Guest, exlore movies today with us!'
-
     return (
         <Box sx={{ bgcolor: 'Background.paper', pt: 8, pd: 8 }}>
             <Container maxWidth="sm">
@@ -35,7 +33,5 @@ export default function Home() {
                     <Button component={RouterLink} to="/movies" variant="contained" color="secondary">Explore</Button>
                 </Stack>
             </Container>
-        </Box>
-    )
-}
+        </Box>)}
 

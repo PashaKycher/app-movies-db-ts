@@ -8,18 +8,15 @@ export default function CountdownVideo() {
     const videoRef =useRef(null);
     function togglePlay() {
         const nextPlay = !isPlay
-        if(nextPlay) {
-            videoRef.current.play()
-        }else{
-            videoRef.current.pause()
-        }
+        if(nextPlay) { videoRef.current.play() }
+        else{ videoRef.current.pause() }
     }
 
     return (
         <Card>
             <CardMedia>
                 <video ref={videoRef} src='https://www.pexels.com/download/video/3843433' height='500'
-                    onPlay={() => setPlay(true)} onPause={() => setPlay(false)} />
+                onPlay={() => setPlay(true)} onPause={() => setPlay(false)} />
             </CardMedia>
             <CardActions>
                 <IconButton onClick={togglePlay}>
@@ -27,6 +24,5 @@ export default function CountdownVideo() {
                 </IconButton>
             </CardActions>
         </Card>
-
     )
 }

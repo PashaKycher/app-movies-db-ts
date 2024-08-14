@@ -45,10 +45,10 @@ function Movies() {
             });
           }} />
       </Grid>
-
       <Grid item xs={12}>
         <Container sx={{ py: 8 }} maxWidth="lg">
-          {!isFetching && !movies?.length && <Typography variant="h6">No movies were found that match your query.</Typography>}
+          {!isFetching && !movies?.length && 
+          <Typography variant="h6">No movies were found that match your query.</Typography>}
           <Grid container spacing={4}>
             {movies?.map(movie => (
               <Grid item key={movie.id} xs={12} sm={6} md={4}>
@@ -56,15 +56,14 @@ function Movies() {
                   image={formatImageUrl(movie.backdrop_path)}
                   id={movie.id}
                   title={movie.title}
-                  popularity={movie.popularity}
+                  popularity={movie.vote_average}
                   overview={movie.overview}
-                  year={movie.year}
+                  year={movie.release_date}
                   enabled={loggedIn}
                   onAddToFavorite={handleAddToFavorites} />
-              </Grid>
-            ))}
+              </Grid>))}
           </Grid>
-          <div ref={targetRef}>{isFetching && <LinearProgress color='secondary' sx={{ mt: 15 }} />}</div>
+          <div ref={targetRef}>{isFetching && <LinearProgress color='secondary' sx={{ mt: 2 }} />}</div>
         </Container>
       </Grid >
     </Grid >

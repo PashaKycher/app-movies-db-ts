@@ -5,7 +5,6 @@ import { Link as RouterLink } from 'react-router-dom';
 import { AuthContext } from './AuthContext';
 import { anonymousUser } from './AuthContext';
 
-
 function HeaderLink({ children, to }) {
   return <Link component={RouterLink}
     to={to}
@@ -30,8 +29,7 @@ export default function AppHeader({onLogin, onLogOut}) {
         <AuthSection onLogin={onLogin} onLogOut={onLogOut} />
       </Toolbar>
     </AppBar>
-  )
-}
+  )}
 
 function AuthSection({onLogin, onLogOut}) {
   const auth = useContext(AuthContext)
@@ -43,7 +41,6 @@ function AuthSection({onLogin, onLogOut}) {
         <Typography>Hell, {auth.user.name}!</Typography>
         <Button variant='outlined' color="inherit" sx={{ ml: 1.5 }} onClick={onLogOut}>Logout</Button>
       </>
-    )
-  }
+    )}
   return (<Button variant='outlined' color="inherit" onClick={onLogin}>Login IN</Button>)
 };

@@ -5,23 +5,16 @@ import AppHeader from './AppHeader';
 import { teal } from '@mui/material/colors';
 import { anonymousUser, AuthContext } from './AuthContext';
 
-
-
-
 const defaultTheme = createTheme({
   palette: {
     primary: teal,
     secondary: {
       main: '#96000f',
-    },
-  },
-})
-
+    },},})
 const fakeAuth = {
   user:{
     name: 'Daniel',
-  }
-}
+  }}
 function App() {
   const [user, setUser] = useState({ user: anonymousUser})
 
@@ -30,12 +23,9 @@ function App() {
       <CssBaseline />
       <AuthContext.Provider value={user}>
         <AppHeader onLogin={() => setUser(fakeAuth)} onLogOut={() => setUser({ user: anonymousUser})} />
-        <main>
-          <Outlet />
-        </main>
+        <main><Outlet /></main>
       </AuthContext.Provider>
     </ThemeProvider>
-  );
-}
+  );}
 
 export default App;

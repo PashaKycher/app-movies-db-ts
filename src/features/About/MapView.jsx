@@ -3,7 +3,6 @@ import { addPopupToMapWidget, createMapWidget } from './mapWidget'
 import { Box, Container, Typography } from '@mui/material'
 import { createPortal } from 'react-dom'
 
-
 export default function MapView() {
   const containerRef = useRef(null)
   const mapRef = useRef(null)
@@ -15,8 +14,7 @@ export default function MapView() {
       mapRef.current = map
       const popupDiv = addPopupToMapWidget(map)
       setPopupContainer(popupDiv)
-    }
-  }, [])
+    }}, [])
   return (
     <Container ref={containerRef} sx={{width: 800, height: 500, my: 2 }}>
       {popupContainer !== null && createPortal(<Greeting />, popupContainer)}

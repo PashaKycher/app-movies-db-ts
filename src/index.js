@@ -23,7 +23,7 @@ const router = createBrowserRouter([
     </Provider>),
     children: [
       {
-        path: "/",
+        path: "/app-movies-db-ts/",
         element: <Home />,
       },
       {

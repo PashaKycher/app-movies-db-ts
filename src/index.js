@@ -27,11 +27,11 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/movies",
+        path: "https://PashaKychergithub.io/app-movies-db-ts/movies",
         element: <Movies />,
       },
       {
-        path: "/about",
+        path: "https://PashaKychergithub.io/app-movies-db-ts/about",
         element: <About />,
       },
     ]

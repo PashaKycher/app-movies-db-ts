@@ -21,9 +21,9 @@ export default function AppHeader({onLogin, onLogOut}) {
         <Typography variant="h6" color="inherit" noWrap>The Movies DB</Typography>
         <Box sx={{ flexGrow: 1 }} >
           <nav>
-            <HeaderLink to="app-movies-db-ts/">Home</HeaderLink>
-            <HeaderLink to="app-movies-db-ts/movies">Movies</HeaderLink>
-            <HeaderLink to="app-movies-db-ts/about">About</HeaderLink>
+            <HeaderLink to="/">Home</HeaderLink>
+            <HeaderLink to="/movies">Movies</HeaderLink>
+            <HeaderLink to="/about">About</HeaderLink>
           </nav>
         </Box>
         <AuthSection onLogin={onLogin} onLogOut={onLogOut} />

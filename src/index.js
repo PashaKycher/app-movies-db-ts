@@ -16,14 +16,14 @@ import Home from './features/Home/Home';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "https://PashaKychergithub.io/app-movies-db-ts/",
     element: (
     <Provider store={store}>
       <App />
     </Provider>),
     children: [
       {
-        path: "/",
+        path: "https://PashaKychergithub.io/app-movies-db-ts/",
         element: <Home />,
       },
       {

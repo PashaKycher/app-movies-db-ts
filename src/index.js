@@ -23,15 +23,15 @@ const router = createBrowserRouter([
     </Provider>),
     children: [
       {
-        path: "/app-movies-db-ts/",
+        path: "app-movies-db-ts/",
         element: <Home />,
       },
       {
-        path: "/app-movies-db-ts/movies",
+        path: "app-movies-db-ts/movies",
         element: <Movies />,
       },
       {
-        path: "/app-movies-db-ts/about",
+        path: "app-movies-db-ts/about",
         element: <About />,
       },
     ]

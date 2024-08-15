@@ -30,7 +30,7 @@ export default function Home() {
                     direction="row"
                     spacing={2}
                     justifyContent="center">
-                    <Button component={RouterLink} to="/movies" variant="contained" color="secondary">Explore</Button>
+                    <Button component={RouterLink} to="/app-movies-db-ts/movies" variant="contained" color="secondary">Explore</Button>
                 </Stack>
             </Container>
         </Box>)}
